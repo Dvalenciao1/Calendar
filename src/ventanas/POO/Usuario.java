@@ -1,14 +1,52 @@
 package ventanas.POO;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Usuario {
 
     private String Correo;
-    private static String Usuario;
     private String Contraseña;
+    private String nameAct;
+    private String textDesc;
+    private String fecha;
     private static String iduser;
+    private static String Usuario;
+    private ArrayList<String> listaIdinvitados = new ArrayList<>();
 
+    public ArrayList<String> getListaIdinvitados() {
+        return listaIdinvitados;
+    }
+
+    public void setListaIdinvitados(ArrayList<String> listaIdinvitados) {
+        this.listaIdinvitados = listaIdinvitados;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getNameAct() {
+        return nameAct;
+    }
+
+    public void setNameAct(String nameAct) {
+        this.nameAct = nameAct;
+    }
+
+    public String getTextDesc() {
+        return textDesc;
+    }
+
+    public void setTextDesc(String textDesc) {
+        this.textDesc = textDesc;
+    }
+    
+    
     public static String getIduser() {
         return iduser;
     }

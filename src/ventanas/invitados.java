@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -158,9 +159,9 @@ public class invitados extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<String> names = new ArrayList<>();
         for (int i = 0; i < lista.getRowCount(); i++) {
-            if (isSelect(i, 2, lista)==true) {
+            if (isSelect(i, 2, lista) == true) {
                 String name = column(i, 0, lista);
-                names.add("- "+name);
+                names.add("- " + name);
             }
         }
         String cadenafinal = String.join("\n", names);
@@ -170,15 +171,19 @@ public class invitados extends javax.swing.JFrame {
 
     int xx, yy;
     private void fondoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoMousePressed
-        xx = evt.getX();
-        yy = evt.getY();
+        if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+            xx = evt.getX();
+            yy = evt.getY();
+        }
     }//GEN-LAST:event_fondoMousePressed
 
     private void fondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoMouseDragged
-        int x, y;
-        x = evt.getXOnScreen();
-        y = evt.getYOnScreen();
-        this.setLocation(x - xx, y - yy);
+        if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+            int x, y;
+            x = evt.getXOnScreen();
+            y = evt.getYOnScreen();
+            this.setLocation(x - xx, y - yy);
+        }
     }//GEN-LAST:event_fondoMouseDragged
 
     public void addCheck(int column, JTable table) {
@@ -195,7 +200,7 @@ public class invitados extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     public String column(int row, int colum, JTable table) {
         String name = table.getValueAt(row, colum).toString();
         return name;

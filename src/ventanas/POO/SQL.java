@@ -18,7 +18,6 @@ public class SQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(url, user, pass);
-            System.out.println("Conexion establecida");
         } catch (ClassNotFoundException e) {
             Logger.getLogger(SQL.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException e) {

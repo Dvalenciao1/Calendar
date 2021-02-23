@@ -10,6 +10,29 @@ import javax.swing.table.DefaultTableModel;
 
 public class Registro extends SQL {
 
+    //Crear un metodo de busqueda de id de usarios en la tabla de registo
+    //Crear un metodo de ingreso de informacion en la tabla de actividades
+    //Algunas configuraciones de los 24 botones
+    public boolean registrarActividad(Usuario usr) {
+        PreparedStatement ps = null;
+        SQL con = new SQL();
+        Connection conexion = con.getConexion();
+        String sql = "INSERT INTO registro(activity, idusuario, descripcion, idinvitados, fecha)values(?,?,?,?,?)";
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, usr.getNameAct());
+            ps.setString(2, Usuario.getIduser());
+            ps.setString(3, usr.getTextDesc());
+            ps.setString(4, usr.getListaIdinvitados().toString());
+            ps.setString(5, usr.getFecha());
+            ps.execute();
+            conexion.close();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public boolean registrar(Usuario usr) {
         PreparedStatement ps = null;
         SQL con = new SQL();
@@ -86,7 +109,7 @@ public class Registro extends SQL {
         String contrainco = Usuario.idioma("ventanas/Bundle", "class.register.contrainco");
         String noexiste = Usuario.idioma("ventanas/Bundle", "class.register.noexist");
         if (result == 1) {
-            JOptionPane.showMessageDialog(null, bienvenida+" "+ usr.getUsuario());
+            JOptionPane.showMessageDialog(null, bienvenida + " " + usr.getUsuario());
         } else if (result == 2) {
             JOptionPane.showMessageDialog(null, contrainco);
         } else {

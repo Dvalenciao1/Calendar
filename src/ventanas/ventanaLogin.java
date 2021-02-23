@@ -2,6 +2,7 @@ package ventanas;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ventanas.POO.Registro;
@@ -37,6 +38,7 @@ public class ventanaLogin extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(700, 800));
 
+        PanelPrincipal.setPreferredSize(new java.awt.Dimension(700, 800));
         PanelPrincipal.setLayout(null);
         PanelPrincipal.add(benditoPan);
         benditoPan.setBounds(500, 80, 80, 80);
@@ -144,11 +146,10 @@ public class ventanaLogin extends javax.swing.JFrame {
 
         EmailText.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
         EmailText.setForeground(new java.awt.Color(0, 0, 0));
-        EmailText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EmailText.setText(bundle.getString("ventanaLogin.EmailText.text")); // NOI18N
         EmailText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         PanelPrincipal.add(EmailText);
-        EmailText.setBounds(180, 300, 79, 24);
+        EmailText.setBounds(180, 300, 120, 24);
 
         PassText.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
         PassText.setForeground(new java.awt.Color(0, 0, 0));
@@ -165,7 +166,11 @@ public class ventanaLogin extends javax.swing.JFrame {
 
         ImageIcon imgfondo = new ImageIcon("src/imagenes/Login.png");
         FondoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Login.png"))); // NOI18N
+        FondoPanel.setDisabledIcon(null);
+        FondoPanel.setMaximumSize(new java.awt.Dimension(0, 0));
+        FondoPanel.setMinimumSize(new java.awt.Dimension(0, 0));
         FondoPanel.setOpaque(true);
+        FondoPanel.setPreferredSize(new java.awt.Dimension(0, 0));
         PanelPrincipal.add(FondoPanel);
         FondoPanel.setBounds(0, 0, 700, 800);
 
@@ -173,15 +178,11 @@ public class ventanaLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(PanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -197,15 +198,14 @@ public class ventanaLogin extends javax.swing.JFrame {
             NewUser.setCorreo(email);
             NewUser.setContraseña(pass);
             int result = reg.verificarUsuarioL(NewUser);
-            System.out.println(result);
             if (result == 1) {
                 reg.Loguearse(NewUser, result);
                 ventanaCalendario calendario = new ventanaCalendario();
                 calendario.setVisible(true);
                 this.dispose();
-            }else if(result == 2){
+            } else if (result == 2) {
                 reg.Loguearse(NewUser, result);
-            }else {
+            } else {
                 reg.Loguearse(NewUser, result);
             }
         } else {
@@ -263,30 +263,30 @@ public class ventanaLogin extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
             if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
-            String email = cajaEmail.getText();
-            String pass = cajaPass.getText();
-            Usuario NewUser = new Usuario();
-            Registro reg = new Registro();
-            NewUser.setCorreo(email);
-            NewUser.setContraseña(pass);
-            int result = reg.verificarUsuarioL(NewUser);
-            System.out.println(result);
-            if (result == 1) {
-                reg.Loguearse(NewUser, result);
-                ventanaCalendario calendario = new ventanaCalendario();
-                calendario.setVisible(true);
-                this.dispose();
-            }else if(result == 2){
-                reg.Loguearse(NewUser, result);
-            }else {
-                reg.Loguearse(NewUser, result);
+                String email = cajaEmail.getText();
+                String pass = cajaPass.getText();
+                Usuario NewUser = new Usuario();
+                Registro reg = new Registro();
+                NewUser.setCorreo(email);
+                NewUser.setContraseña(pass);
+                int result = reg.verificarUsuarioL(NewUser);
+                if (result == 1) {
+                    reg.Loguearse(NewUser, result);
+                    ventanaCalendario calendario = new ventanaCalendario();
+                    calendario.setVisible(true);
+                    this.dispose();
+                } else if (result == 2) {
+                    reg.Loguearse(NewUser, result);
+                } else {
+                    reg.Loguearse(NewUser, result);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, vacios);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, vacios);
-        }
         }
     }//GEN-LAST:event_cajaPassKeyReleased
 
+    private int xx, yy;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BannerLogin;
