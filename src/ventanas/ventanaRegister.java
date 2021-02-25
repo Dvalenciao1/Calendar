@@ -214,37 +214,39 @@ public class ventanaRegister extends javax.swing.JFrame {
         String existeCorreo = Usuario.idioma("ventanas/Bundle", "ventanaRegister.existecorreo");
         String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
         if (!cajaUser.getText().isEmpty() && !cajaEmail.getText().isEmpty() && !cajaPass.getText().isEmpty()) {
-            String User = cajaUser.getText();
-            String Email = cajaEmail.getText();
-            String Pass = cajaPass.getText();
-            Registro EnterReg = new Registro();
-            Usuario NewUser = new Usuario();
-            NewUser.setUsuario(User);
-            NewUser.setCorreo(Email);
-            NewUser.setContraseña(Pass);
-            int result = EnterReg.verificarUsuarioR(NewUser);
-            if (result == -1) {
-                cajaEmail.setText("");
-                cajaPass.setText("");
-                cajaUser.setText("");
-                EnterReg.registrar(NewUser);
-                JOptionPane.showMessageDialog(this, exito);
-                int response = JOptionPane.showConfirmDialog(this, pregunta, botonconfirm, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (response != JOptionPane.YES_OPTION) {
-                    ventanaLogin log = new ventanaLogin();
-                    log.setVisible(true);
-                    this.dispose();
+            if (cajaEmail.getText().contains("@") && cajaEmail.getText().contains(".")) {
+                String User = cajaUser.getText();
+                String Email = cajaEmail.getText();
+                String Pass = cajaPass.getText();
+                Registro EnterReg = new Registro();
+                Usuario NewUser = new Usuario();
+                NewUser.setUsuario(User);
+                NewUser.setCorreo(Email);
+                NewUser.setContraseña(Pass);
+                int result = EnterReg.verificarUsuarioR(NewUser);
+                if (result == -1) {
+                    cajaEmail.setText("");
+                    cajaPass.setText("");
+                    cajaUser.setText("");
+                    EnterReg.registrar(NewUser);
+                    JOptionPane.showMessageDialog(this, exito);
+                    int response = JOptionPane.showConfirmDialog(this, pregunta, botonconfirm, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (response != JOptionPane.YES_OPTION) {
+                        ventanaLogin log = new ventanaLogin();
+                        log.setVisible(true);
+                        this.dispose();
+                    }
+                } else if (result == 1) {
+                    cajaEmail.setText("");
+                    cajaPass.setText("");
+                    cajaUser.setText("");
+                    JOptionPane.showMessageDialog(null, existeUsuario);
+                } else if (result == 2) {
+                    cajaEmail.setText("");
+                    cajaPass.setText("");
+                    cajaUser.setText("");
+                    JOptionPane.showMessageDialog(null, existeCorreo);
                 }
-            } else if (result == 1) {
-                cajaEmail.setText("");
-                cajaPass.setText("");
-                cajaUser.setText("");
-                JOptionPane.showMessageDialog(null, existeUsuario);
-            } else if (result == 2) {
-                cajaEmail.setText("");
-                cajaPass.setText("");
-                cajaUser.setText("");
-                JOptionPane.showMessageDialog(null, existeCorreo);
             }
         } else {
             JOptionPane.showMessageDialog(this, vacios);

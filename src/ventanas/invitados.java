@@ -5,8 +5,10 @@
  */
 package ventanas;
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import ventanas.POO.Registro;
@@ -49,7 +51,6 @@ public class invitados extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         LbEncabezado = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -57,9 +58,6 @@ public class invitados extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JTable();
         fondo = new javax.swing.JLabel();
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("ventanas/Bundle"); // NOI18N
-        jButton2.setText(bundle.getString("invitados.jButton2.text")); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -69,6 +67,7 @@ public class invitados extends javax.swing.JFrame {
 
         LbEncabezado.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         LbEncabezado.setForeground(new java.awt.Color(255, 255, 255));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("ventanas/Bundle"); // NOI18N
         LbEncabezado.setText(bundle.getString("invitados.LbEncabezado.text")); // NOI18N
         jPanel1.add(LbEncabezado);
         LbEncabezado.setBounds(50, 40, 290, 30);
@@ -83,9 +82,18 @@ public class invitados extends javax.swing.JFrame {
         jPanel1.add(jButton1);
         jButton1.setBounds(460, 382, 120, 33);
 
+        btncerrar.setToolTipText(bundle.getString("invitados.btncerrar.toolTipText")); // NOI18N
         btncerrar.setBorderPainted(false);
         btncerrar.setContentAreaFilled(false);
         btncerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btncerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btncerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btncerrarMouseExited(evt);
+            }
+        });
         btncerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncerrarActionPerformed(evt);
@@ -150,9 +158,9 @@ public class invitados extends javax.swing.JFrame {
 
     private void btncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarActionPerformed
         this.dispose();
-        lista.setValueAt(false, 0, 2);
-        lista.setValueAt(false, 1, 2);
-        lista.setValueAt(false, 2, 2);
+        for (int i = 0; i < lista.getRowCount(); i++) {
+            lista.setValueAt(false, i, 2);
+        }
         lista.clearSelection();
     }//GEN-LAST:event_btncerrarActionPerformed
 
@@ -166,6 +174,10 @@ public class invitados extends javax.swing.JFrame {
         }
         String cadenafinal = String.join("\n", names);
         ventanaCalendario.atInvitado.setText("\n"+cadenafinal);
+        for (int i = 0; i < lista.getRowCount(); i++) {
+            lista.setValueAt(false, i, 2);
+        }
+        lista.clearSelection();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -185,6 +197,18 @@ public class invitados extends javax.swing.JFrame {
             this.setLocation(x - xx, y - yy);
         }
     }//GEN-LAST:event_fondoMouseDragged
+
+    private void btncerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncerrarMouseEntered
+        ImageIcon closeimg = new ImageIcon("src/imagenes/cancelar.png");
+        btncerrar.setBounds(540, 10, 53, 53);
+        btncerrar.setIcon(new ImageIcon(closeimg.getImage().getScaledInstance(btncerrar.getWidth(), btncerrar.getHeight(), Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btncerrarMouseEntered
+
+    private void btncerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncerrarMouseExited
+        ImageIcon closeimg = new ImageIcon("src/imagenes/cancelar.png");
+        btncerrar.setBounds(540, 10, 50, 50);
+        btncerrar.setIcon(new ImageIcon(closeimg.getImage().getScaledInstance(btncerrar.getWidth(), btncerrar.getHeight(), Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btncerrarMouseExited
 
     public void addCheck(int column, JTable table) {
         TableColumn tc = table.getColumnModel().getColumn(column);
@@ -214,7 +238,6 @@ public class invitados extends javax.swing.JFrame {
     private javax.swing.JButton btncerrar;
     private javax.swing.JLabel fondo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable lista;

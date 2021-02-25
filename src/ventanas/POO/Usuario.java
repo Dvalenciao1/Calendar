@@ -10,9 +10,18 @@ public class Usuario {
     private String nameAct;
     private String textDesc;
     private String fecha;
+    private int hora;
     private static String iduser;
     private static String Usuario;
     private ArrayList<String> listaIdinvitados = new ArrayList<>();
+
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
 
     public ArrayList<String> getListaIdinvitados() {
         return listaIdinvitados;

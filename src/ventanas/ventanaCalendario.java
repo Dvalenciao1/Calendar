@@ -1,23 +1,33 @@
 package ventanas;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import ventanas.POO.Registro;
 import ventanas.POO.Usuario;
 
-public class ventanaCalendario extends javax.swing.JFrame {
+public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
+    private String horas, amp;
+    private int Horabtn;
+    private Thread h1;
     private int xx, xy;
     private int xx1, xy1;
 
     public ventanaCalendario() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Date fechaActual = new Date();
-        rSDateChooser1.setDatoFecha(fechaActual);
+        h1 = new Thread(this);
+        h1.start();
+        agregarTooltip();
         Disable();
+        cargarActividades();
+
     }
 
     public void Disable() {
@@ -49,7 +59,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         botonCerrar = new javax.swing.JButton();
         lbActividad = new javax.swing.JLabel();
         lbADD = new javax.swing.JLabel();
-        registroAct = new javax.swing.JScrollPane();
+        rSDateChooser1 = new rojeru_san.componentes.RSDateChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jButton00 = new javax.swing.JButton();
         jButton01 = new javax.swing.JButton();
@@ -62,10 +73,6 @@ public class ventanaCalendario extends javax.swing.JFrame {
         jButton08 = new javax.swing.JButton();
         jButton09 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
@@ -106,8 +113,7 @@ public class ventanaCalendario extends javax.swing.JFrame {
         jLabel20H = new javax.swing.JLabel();
         jLabel21H = new javax.swing.JLabel();
         jLabel22H = new javax.swing.JLabel();
-        rSDateChooser1 = new rojeru_san.componentes.RSDateChooser();
-        jButton1 = new javax.swing.JButton();
+        select1 = new javax.swing.JButton();
         fondopanelder = new javax.swing.JLabel();
         fondopanelizq = new javax.swing.JLabel();
 
@@ -241,10 +247,16 @@ public class ventanaCalendario extends javax.swing.JFrame {
         Panelizq.add(lbADD);
         lbADD.setBounds(1260, 470, 120, 19);
 
+        rSDateChooser1.setPlaceholder(bundle.getString("ventanaCalendario.rSDateChooser1.placeholder")); // NOI18N
+        Panelizq.add(rSDateChooser1);
+        rSDateChooser1.setBounds(150, 30, 330, 40);
+
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton00.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton00.setBackground(new java.awt.Color(238, 238, 238));
+        jButton00.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton00.setText(bundle.getString("ventanaCalendario.jButton00.text")); // NOI18N
         jButton00.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton00ActionPerformed(evt);
@@ -252,7 +264,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton00, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 490, 70));
 
-        jButton01.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton01.setBackground(new java.awt.Color(238, 238, 238));
+        jButton01.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton01.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton01ActionPerformed(evt);
@@ -260,7 +273,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton01, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 490, 70));
 
-        jButton02.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton02.setBackground(new java.awt.Color(238, 238, 238));
+        jButton02.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton02.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton02ActionPerformed(evt);
@@ -268,7 +282,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton02, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 490, 70));
 
-        jButton03.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton03.setBackground(new java.awt.Color(238, 238, 238));
+        jButton03.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton03.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton03ActionPerformed(evt);
@@ -276,7 +291,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton03, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 490, 70));
 
-        jButton04.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton04.setBackground(new java.awt.Color(238, 238, 238));
+        jButton04.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton04.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton04ActionPerformed(evt);
@@ -284,7 +300,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton04, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 490, 70));
 
-        jButton05.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton05.setBackground(new java.awt.Color(238, 238, 238));
+        jButton05.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton05.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton05ActionPerformed(evt);
@@ -292,7 +309,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton05, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 490, 70));
 
-        jButton06.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton06.setBackground(new java.awt.Color(238, 238, 238));
+        jButton06.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton06.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton06ActionPerformed(evt);
@@ -300,7 +318,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton06, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 490, 70));
 
-        jButton07.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton07.setBackground(new java.awt.Color(238, 238, 238));
+        jButton07.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton07.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton07ActionPerformed(evt);
@@ -308,7 +327,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton07, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 570, 490, 70));
 
-        jButton08.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton08.setBackground(new java.awt.Color(238, 238, 238));
+        jButton08.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton08.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton08ActionPerformed(evt);
@@ -316,7 +336,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton08, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 640, 490, 70));
 
-        jButton09.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton09.setBackground(new java.awt.Color(238, 238, 238));
+        jButton09.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton09.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton09ActionPerformed(evt);
@@ -324,7 +345,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton09, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 710, 490, 70));
 
-        jButton10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton10.setBackground(new java.awt.Color(238, 238, 238));
+        jButton10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -332,39 +354,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 780, 490, 70));
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 570, 490, 70));
-
-        jButton9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 640, 490, 70));
-
-        jButton24.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 710, 490, 70));
-
-        jButton25.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton25, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 780, 490, 70));
-
-        jButton11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton11.setBackground(new java.awt.Color(238, 238, 238));
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
@@ -372,7 +363,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 850, 490, 70));
 
-        jButton12.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton12.setBackground(new java.awt.Color(238, 238, 238));
+        jButton12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton12ActionPerformed(evt);
@@ -380,7 +372,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 920, 490, 70));
 
-        jButton13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton13.setBackground(new java.awt.Color(238, 238, 238));
+        jButton13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
@@ -388,7 +381,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 990, 490, 70));
 
-        jButton14.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton14.setBackground(new java.awt.Color(238, 238, 238));
+        jButton14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -396,7 +390,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1060, 490, 70));
 
-        jButton15.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton15.setBackground(new java.awt.Color(238, 238, 238));
+        jButton15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton15ActionPerformed(evt);
@@ -404,7 +399,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1130, 490, 70));
 
-        jButton16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton16.setBackground(new java.awt.Color(238, 238, 238));
+        jButton16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton16ActionPerformed(evt);
@@ -412,7 +408,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1200, 490, 70));
 
-        jButton17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton17.setBackground(new java.awt.Color(238, 238, 238));
+        jButton17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton17ActionPerformed(evt);
@@ -420,7 +417,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1270, 490, 70));
 
-        jButton18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton18.setBackground(new java.awt.Color(238, 238, 238));
+        jButton18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton18ActionPerformed(evt);
@@ -428,7 +426,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1340, 490, 70));
 
-        jButton19.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton19.setBackground(new java.awt.Color(238, 238, 238));
+        jButton19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton19ActionPerformed(evt);
@@ -436,7 +435,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1410, 490, 70));
 
-        jButton20.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton20.setBackground(new java.awt.Color(238, 238, 238));
+        jButton20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton20ActionPerformed(evt);
@@ -444,7 +444,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1480, 490, 70));
 
-        jButton21.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton21.setBackground(new java.awt.Color(238, 238, 238));
+        jButton21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton21ActionPerformed(evt);
@@ -452,7 +453,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1550, 490, 70));
 
-        jButton22.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton22.setBackground(new java.awt.Color(238, 238, 238));
+        jButton22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton22ActionPerformed(evt);
@@ -460,7 +462,8 @@ public class ventanaCalendario extends javax.swing.JFrame {
         });
         jPanel2.add(jButton22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 1620, 490, 70));
 
-        jButton23.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton23.setBackground(new java.awt.Color(238, 238, 238));
+        jButton23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton23ActionPerformed(evt);
@@ -656,24 +659,20 @@ public class ventanaCalendario extends javax.swing.JFrame {
         jLabel22H.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), null));
         jPanel2.add(jLabel22H, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 1620, 150, 70));
 
-        registroAct.setViewportView(jPanel2);
+        jScrollPane1.setViewportView(jPanel2);
 
-        Panelizq.add(registroAct);
-        registroAct.setBounds(110, 90, 680, 580);
+        Panelizq.add(jScrollPane1);
+        jScrollPane1.setBounds(120, 90, 680, 560);
 
-        rSDateChooser1.setPlaceholder(bundle.getString("ventanaCalendario.rSDateChooser1.placeholder")); // NOI18N
-        Panelizq.add(rSDateChooser1);
-        rSDateChooser1.setBounds(150, 30, 330, 40);
-
-        jButton1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        jButton1.setText(bundle.getString("ventanaCalendario.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        select1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        select1.setText(bundle.getString("ventanaCalendario.select1.text")); // NOI18N
+        select1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                select1ActionPerformed(evt);
             }
         });
-        Panelizq.add(jButton1);
-        jButton1.setBounds(530, 30, 190, 40);
+        Panelizq.add(select1);
+        select1.setBounds(530, 30, 190, 40);
 
         fondopanelder.setOpaque(true);
         fondopanelder.setPreferredSize(new java.awt.Dimension(950, 0));
@@ -786,7 +785,7 @@ public class ventanaCalendario extends javax.swing.JFrame {
         btnadd.setBounds(1210, 460, 40, 40);
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnaddMouseExited
-   
+
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         boolean resultpg = invpg.isShowing();
         if (resultpg == true) {
@@ -801,12 +800,9 @@ public class ventanaCalendario extends javax.swing.JFrame {
 
     private void fondopanelderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelderMousePressed
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
-            Disable();
             xx1 = evt.getX() + 950;
             xy1 = evt.getY();
         }
-
-
     }//GEN-LAST:event_fondopanelderMousePressed
 
     private void fondopanelderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelderMouseDragged
@@ -817,47 +813,47 @@ public class ventanaCalendario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_fondopanelderMouseDragged
 
+    //Recoge la fecha ingresada en el datechooser
     public String fecha() {
         String formato = "dd/MM/YYY";
         Date fecha = rSDateChooser1.getDatoFecha();
         SimpleDateFormat formatofecha = new SimpleDateFormat(formato);
         return formatofecha.format(fecha);
     }
-    
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String formato = "dd MMM YYY";
-        Date fecha = rSDateChooser1.getDatoFecha();
-        SimpleDateFormat formatofecha = new SimpleDateFormat(formato);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton00ActionPerformed
-        btnesHora();
-    }//GEN-LAST:event_jButton00ActionPerformed
-
-    public void btnesHora() {
-        if (fecha() != null) {
-            ActivarComp();
-        }
+    public void setHora(int Hora) {
+        this.Horabtn = Hora;
     }
+
     private void botonActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActividadActionPerformed
         String text = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.btnAct");
         String tiltext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.btnActTilt");
         String text1 = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.txtbtnAct");
         String tiltext1 = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.txtbtnActMSG");
+        String invittext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.jbuton.txt");
         if (txtAct.isEditable() && txtDesc.isEditable() && btnadd.isEnabled()) {
+            Registro reg = new Registro();
             Usuario user = new Usuario();
             user.setNameAct(txtAct.getText());
             user.setTextDesc(txtDesc.getText());
+            user.setHora(Horabtn);
             user.setFecha(fecha());
             if (!atInvitado.getText().isEmpty()) {
                 String[] cadena = atInvitado.getText().split("-");
                 ArrayList<String> invited = new ArrayList<>();
                 for (int i = 0; i < cadena.length; i++) {
                     if (!cadena[i].equals("\n")) {
-                        invited.add(cadena[i].replace("\n", ""));
+                        invited.add(cadena[i].replace("\n", "").replace(" ", ""));
                     }
                 }
-                user.setListaIdinvitados(invited);
+                user.setListaIdinvitados(reg.busquedaIdxUsuario(invited));
+                if (!user.getListaIdinvitados().isEmpty()) {
+                    reg.registrarActividad(user);
+                    bloquearBoton("<" + "html" + ">" + user.getNameAct() + "<" + "br" + ">" + user.getTextDesc() + "<" + "br" + ">" + invittext + "" + invited + "<!--" + "html" + "-->", Horabtn, Color.GREEN);
+                    txtAct.setText("");
+                    txtDesc.setText("");
+                    atInvitado.setText("");
+                }
             }
         } else if (!txtAct.isEditable() && !txtDesc.isEditable() && !btnadd.isEnabled()) {
             JOptionPane.showMessageDialog(this, text, tiltext, JOptionPane.ERROR_MESSAGE);
@@ -866,114 +862,381 @@ public class ventanaCalendario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonActividadActionPerformed
 
+    private void jButton00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton00ActionPerformed
+        setHora(0);
+        if (bot0 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
+    }//GEN-LAST:event_jButton00ActionPerformed
+
     private void jButton01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton01ActionPerformed
-        btnesHora();
+        setHora(1);
+        if (bot1 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton01ActionPerformed
 
     private void jButton02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton02ActionPerformed
-        btnesHora();
+        setHora(2);
+        if (bot2 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton02ActionPerformed
 
     private void jButton03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton03ActionPerformed
-        btnesHora();
+        setHora(3);
+        if (bot3 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton03ActionPerformed
 
     private void jButton04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton04ActionPerformed
-        btnesHora();
+        setHora(4);
+        if (bot4 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton04ActionPerformed
 
     private void jButton05ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton05ActionPerformed
-        btnesHora();
+        setHora(5);
+        if (bot5 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton05ActionPerformed
 
     private void jButton06ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton06ActionPerformed
-        btnesHora();
+        setHora(6);
+        if (bot6 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton06ActionPerformed
 
     private void jButton07ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton07ActionPerformed
-        btnesHora();
+        setHora(7);
+        if (bot7 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton07ActionPerformed
 
     private void jButton08ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton08ActionPerformed
-        btnesHora();
+        setHora(8);
+        if (bot8 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton08ActionPerformed
 
     private void jButton09ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton09ActionPerformed
-        btnesHora();
+        setHora(9);
+        if (bot9 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton09ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        btnesHora();
+        setHora(10);
+        if (bot10 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        btnesHora();
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        btnesHora();
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        btnesHora();
-    }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        btnesHora();
-    }//GEN-LAST:event_jButton25ActionPerformed
-
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        btnesHora();
+        setHora(11);
+        if (bot11 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        btnesHora();
+        setHora(12);
+        if (bot12 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        btnesHora();
+        setHora(13);
+        if (bot13 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        btnesHora();
+        setHora(14);
+        if (bot14 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        btnesHora();
+        setHora(15);
+        if (bot15 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        btnesHora();
+        setHora(16);
+        if (bot16 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        btnesHora();
+        setHora(17);
+        if (bot17 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        btnesHora();
+        setHora(18);
+        if (bot18 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        btnesHora();
+        setHora(19);
+        if (bot19 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        btnesHora();
+        setHora(20);
+        if (bot20 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        btnesHora();
+        setHora(21);
+        if (bot21 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        btnesHora();
+        setHora(22);
+        if (bot22 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        btnesHora();
+        setHora(23);
+        if (bot23 == false) {
+            limpiarActividad();
+            ActivarComp();
+        } else {
+            suprimirActividad();
+        }
     }//GEN-LAST:event_jButton23ActionPerformed
 
+    private void select1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select1ActionPerformed
+        restablecer();
+        cambiarFecha();
+        returnFalsebtn();
+    }//GEN-LAST:event_select1ActionPerformed
+
+    public void limpiarActividad() {
+        txtAct.setText("");
+        txtDesc.setText("");
+        atInvitado.setText("");
+    }
+
+    public void bloquearBoton(String titulo, int hor, Color color) {
+        if (hor == 0) {
+            jButton00.setText(titulo);
+            jButton00.setBackground(color);
+            bot0 = true;
+
+        }
+        if (hor == 1) {
+            jButton01.setText(titulo);
+            jButton01.setBackground(color);
+            bot1 = true;
+        }
+        if (hor == 2) {
+            jButton02.setText(titulo);
+            jButton02.setBackground(color);
+            bot2 = true;
+        }
+        if (hor == 3) {
+            jButton03.setText(titulo);
+            jButton03.setBackground(color);
+            bot3 = true;
+        }
+        if (hor == 4) {
+            jButton04.setText(titulo);
+            jButton04.setBackground(color);
+            bot4 = true;
+        }
+        if (hor == 5) {
+            jButton05.setText(titulo);
+            jButton05.setBackground(color);
+            bot5 = true;
+        }
+        if (hor == 6) {
+            jButton06.setText(titulo);
+            jButton06.setBackground(color);
+            bot6 = true;
+        }
+        if (hor == 7) {
+            jButton07.setText(titulo);
+            jButton07.setBackground(color);
+            bot7 = true;
+        }
+        if (hor == 8) {
+            jButton08.setText(titulo);
+            jButton08.setBackground(color);
+            bot8 = true;
+        }
+        if (hor == 9) {
+            jButton09.setText(titulo);
+            jButton09.setBackground(color);
+            bot9 = true;
+        }
+        if (hor == 10) {
+            jButton10.setText(titulo);
+            jButton10.setBackground(color);
+            bot10 = true;
+        }
+        if (hor == 11) {
+            jButton11.setText(titulo);
+            jButton11.setBackground(color);
+            bot11 = true;
+        }
+        if (hor == 12) {
+            jButton12.setText(titulo);
+            jButton12.setBackground(color);
+            bot12 = true;
+        }
+        if (hor == 13) {
+            jButton13.setText(titulo);
+            jButton13.setBackground(color);
+            bot13 = true;
+        }
+        if (hor == 14) {
+            jButton14.setText(titulo);
+            jButton14.setBackground(color);
+            bot14 = true;
+        }
+        if (hor == 15) {
+            jButton15.setText(titulo);
+            jButton15.setBackground(color);
+            bot15 = true;
+        }
+        if (hor == 16) {
+            jButton16.setText(titulo);
+            jButton16.setBackground(color);
+            bot16 = true;
+        }
+        if (hor == 17) {
+            jButton17.setText(titulo);
+            jButton17.setBackground(color);
+            bot17 = true;
+        }
+        if (hor == 18) {
+            jButton18.setText(titulo);
+            jButton18.setBackground(color);
+            bot18 = true;
+        }
+        if (hor == 19) {
+            jButton19.setText(titulo);
+            jButton19.setBackground(color);
+            bot19 = true;
+        }
+        if (hor == 20) {
+            jButton20.setText(titulo);
+            jButton20.setBackground(color);
+            bot20 = true;
+        }
+        if (hor == 21) {
+            jButton21.setText(titulo);
+            jButton21.setBackground(color);
+            bot21 = true;
+        }
+        if (hor == 22) {
+            jButton22.setText(titulo);
+            jButton22.setBackground(color);
+            bot22 = true;
+        }
+        if (hor == 23) {
+            jButton23.setText(titulo);
+            jButton23.setBackground(color);
+            bot23 = true;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panelizq;
@@ -995,7 +1258,6 @@ public class ventanaCalendario extends javax.swing.JFrame {
     private javax.swing.JButton jButton07;
     private javax.swing.JButton jButton08;
     private javax.swing.JButton jButton09;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1010,10 +1272,6 @@ public class ventanaCalendario extends javax.swing.JFrame {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel0H;
     private javax.swing.JLabel jLabel10H;
     private javax.swing.JLabel jLabel11H;
@@ -1042,14 +1300,393 @@ public class ventanaCalendario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFI;
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbADD;
     private javax.swing.JLabel lbActividad;
     private javax.swing.JLabel lbDesc;
     private javax.swing.JLabel lbInvitado;
     private rojeru_san.componentes.RSDateChooser rSDateChooser1;
-    private javax.swing.JScrollPane registroAct;
+    private javax.swing.JButton select1;
     private LIB.JTexfieldPH_FielTex txtAct;
     private LIB.JTexfieldPH_FielTex txtDesc;
     // End of variables declaration//GEN-END:variables
-     private invitados invpg = new invitados();
+    private invitados invpg = new invitados();
+    private Boolean bot0 = false, bot1 = false, bot2 = false, bot3 = false, bot4 = false, bot5 = false, bot6 = false, bot7 = false, bot8 = false, bot9 = false, bot10 = false, bot11 = false, bot12 = false, bot13 = false, bot14 = false, bot15 = false, bot16 = false, bot17 = false, bot18 = false, bot19 = false, bot20 = false, bot21 = false, bot22 = false, bot23 = false;
+
+    @Override
+    public void run() {
+        Thread ct = Thread.currentThread();
+        while (ct == h1) {
+            calcula();
+            if (notificar(horas) == true) {
+                restablecer();
+                cambiarFecha();
+                returnFalsebtn();
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public void agregarTooltip() {
+        String add = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.tooltiptxt.Añadir");
+        jButton00.setToolTipText(add);
+        jButton01.setToolTipText(add);
+        jButton02.setToolTipText(add);
+        jButton03.setToolTipText(add);
+        jButton05.setToolTipText(add);
+        jButton06.setToolTipText(add);
+        jButton07.setToolTipText(add);
+        jButton08.setToolTipText(add);
+        jButton09.setToolTipText(add);
+        jButton10.setToolTipText(add);
+        jButton11.setToolTipText(add);
+        jButton12.setToolTipText(add);
+        jButton13.setToolTipText(add);
+        jButton14.setToolTipText(add);
+        jButton15.setToolTipText(add);
+        jButton16.setToolTipText(add);
+        jButton17.setToolTipText(add);
+        jButton18.setToolTipText(add);
+        jButton19.setToolTipText(add);
+        jButton20.setToolTipText(add);
+        jButton21.setToolTipText(add);
+        jButton22.setToolTipText(add);
+        jButton23.setToolTipText(add);
+    }
+
+    public void cargarActividades() {
+        String formato = "dd/MM/YYY";
+        Date fechaActual = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat(formato);
+        rSDateChooser1.setDatoFecha(fechaActual);
+        String invittext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.jbuton.txt");
+        Registro reg = new Registro();
+        String cantidadActividades = reg.countRow();//Cantidad de Actividades en la base de datos
+        String cantidadusr;//Cantidad de usuarios
+        String[][] nuevalista = reg.guardarAct(cantidadActividades);
+        for (int i = 0; i < nuevalista.length; i++) {
+            cantidadusr = reg.countRowReg(nuevalista[i][2]);
+            String[][] nuevalistacorreo = reg.busquedaUsuariosxId(nuevalista[i][2], cantidadusr);
+            String cadenainv = "";
+            String[] arrayinvitados = new String[Integer.parseInt(cantidadusr)];
+            if (i < nuevalistacorreo.length) {
+                for (int j = 0; j < Integer.parseInt(cantidadusr); j++) {
+                    if (nuevalistacorreo[j][0] != null) {
+                        ArrayList<String> arreglofinal = new ArrayList<>();
+                        cadenainv += nuevalistacorreo[j][0] + ",";
+                        arrayinvitados = cadenainv.split(",");
+                        for (int k = 0; k < arrayinvitados.length; k++) {
+                            arreglofinal.add(arrayinvitados[k]);
+                        }
+                        for (int jm = 0; jm < nuevalista[i].length; jm++) {
+                            if (nuevalista[i][3].equals(formatofecha.format(fechaActual))) {
+                                bloquearBoton("<" + "html" + ">" + nuevalista[i][0] + "<" + "br" + ">" + nuevalista[i][1] + "<" + "br" + ">" + invittext + " " + arreglofinal.toString() + "<!--" + "html" + "-->", Integer.parseInt(nuevalista[i][4]), Color.GREEN);
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void cambiarFecha() {
+        Registro reg = new Registro();
+        String cantidadActividades = reg.countRow();//Cantidad de Actividades en la base de datos
+        String cantidadusr;//Cantidad de usuarios
+        String[][] nuevalista = reg.guardarAct(cantidadActividades);
+        String invittext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.jbuton.txt");
+        for (int i = 0; i < nuevalista.length; i++) {
+            cantidadusr = reg.countRowReg(nuevalista[i][2]);
+            String[][] nuevalistacorreo = reg.busquedaUsuariosxId(nuevalista[i][2], cantidadusr);
+            String cadenainv = "";
+            String[] arrayinvitados = new String[Integer.parseInt(cantidadusr)];
+            if (i < nuevalistacorreo.length) {
+                for (int j = 0; j < Integer.parseInt(cantidadusr); j++) {
+                    if (nuevalistacorreo[j][0] != null) {
+                        ArrayList<String> arreglofinal = new ArrayList<>();
+                        cadenainv += nuevalistacorreo[j][0] + ",";
+                        arrayinvitados = cadenainv.split(",");
+                        for (int k = 0; k < arrayinvitados.length; k++) {
+                            arreglofinal.add(arrayinvitados[k]);
+                        }
+                        for (int jm = 0; jm < nuevalista[i].length; jm++) {
+                            if (nuevalista[i][3].equals(fecha())) {
+                                bloquearBoton("<" + "html" + ">" + nuevalista[i][0] + "<" + "br" + ">" + nuevalista[i][1] + "<" + "br" + ">" + invittext + " " + arreglofinal.toString() + "<!--" + "html" + "-->", Integer.parseInt(nuevalista[i][4]), Color.GREEN);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void restablecer() {
+        jButton00.setEnabled(true);
+        jButton00.setText("");
+        jButton00.setBackground(new Color(238, 238, 238));
+        jButton01.setText("");
+        jButton01.setBackground(new Color(238, 238, 238));
+        jButton01.setEnabled(true);
+        jButton02.setEnabled(true);
+        jButton02.setText("");
+        jButton02.setBackground(new Color(238, 238, 238));
+        jButton03.setText("");
+        jButton03.setBackground(new Color(238, 238, 238));
+        jButton03.setEnabled(true);
+        jButton04.setText("");
+        jButton04.setBackground(new Color(238, 238, 238));
+        jButton04.setEnabled(true);
+        jButton05.setText("");
+        jButton05.setBackground(new Color(238, 238, 238));
+        jButton05.setEnabled(true);
+        jButton06.setText("");
+        jButton06.setBackground(new Color(238, 238, 238));
+        jButton06.setEnabled(true);
+        jButton07.setText("");
+        jButton07.setBackground(new Color(238, 238, 238));
+        jButton07.setEnabled(true);
+        jButton08.setText("");
+        jButton08.setBackground(new Color(238, 238, 238));
+        jButton08.setEnabled(true);
+        jButton09.setText("");
+        jButton09.setBackground(new Color(238, 238, 238));
+        jButton09.setEnabled(true);
+        jButton10.setText("");
+        jButton10.setBackground(new Color(238, 238, 238));
+        jButton10.setEnabled(true);
+        jButton11.setText("");
+        jButton11.setBackground(new Color(238, 238, 238));
+        jButton11.setEnabled(true);
+        jButton12.setText("");
+        jButton12.setBackground(new Color(238, 238, 238));
+        jButton12.setEnabled(true);
+        jButton13.setText("");
+        jButton13.setBackground(new Color(238, 238, 238));
+        jButton13.setEnabled(true);
+        jButton14.setText("");
+        jButton14.setBackground(new Color(238, 238, 238));
+        jButton14.setEnabled(true);
+        jButton15.setText("");
+        jButton15.setBackground(new Color(238, 238, 238));
+        jButton15.setEnabled(true);
+        jButton16.setText("");
+        jButton16.setBackground(new Color(238, 238, 238));
+        jButton16.setEnabled(true);
+        jButton17.setText("");
+        jButton17.setBackground(new Color(238, 238, 238));
+        jButton17.setEnabled(true);
+        jButton18.setText("");
+        jButton18.setBackground(new Color(238, 238, 238));
+        jButton18.setEnabled(true);
+        jButton19.setText("");
+        jButton19.setBackground(new Color(238, 238, 238));
+        jButton19.setEnabled(true);
+        jButton20.setText("");
+        jButton20.setBackground(new Color(238, 238, 238));
+        jButton20.setEnabled(true);
+        jButton21.setText("");
+        jButton21.setBackground(new Color(238, 238, 238));
+        jButton21.setEnabled(true);
+        jButton22.setText("");
+        jButton22.setBackground(new Color(238, 238, 238));
+        jButton22.setEnabled(true);
+        jButton23.setText("");
+        jButton23.setBackground(new Color(238, 238, 238));
+        jButton23.setEnabled(true);
+    }
+
+    public void suprimirActividad() {
+        String txtdelete = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.txtDelete.JoptionPane");
+        String txtconfirm = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.txtconfirm.JoptionPane");
+        int response = JOptionPane.showConfirmDialog(null, txtdelete, txtconfirm, JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            Registro reg = new Registro();
+            reg.EliminarEvt(reg.idEvento(fecha(), Horabtn));
+            restablecer();
+            cambiarFecha();
+            switch (Horabtn) {
+                case 0:
+                    bot0 = false;
+                    break;
+                case 1:
+                    bot1 = false;
+                    break;
+                case 2:
+                    bot2 = false;
+                    break;
+                case 3:
+                    bot3 = false;
+                    break;
+                case 4:
+                    bot4 = false;
+                    break;
+                case 5:
+                    bot5 = false;
+                    break;
+                case 6:
+                    bot6 = false;
+                    break;
+                case 7:
+                    bot7 = false;
+                    break;
+                case 8:
+                    bot8 = false;
+                    break;
+                case 9:
+                    bot9 = false;
+                    break;
+                case 10:
+                    bot10 = false;
+                    break;
+                case 11:
+                    bot11 = false;
+                    break;
+                case 12:
+                    bot12 = false;
+                    break;
+                case 13:
+                    bot13 = false;
+                    break;
+                case 14:
+                    bot14 = false;
+                    break;
+                case 15:
+                    bot15 = false;
+                    break;
+                case 16:
+                    bot16 = false;
+                    break;
+                case 17:
+                    bot17 = false;
+                    break;
+                case 18:
+                    bot18 = false;
+                    break;
+                case 19:
+                    bot19 = false;
+                    break;
+                case 20:
+                    bot20 = false;
+                    break;
+                case 21:
+                    bot21 = false;
+                    break;
+                case 22:
+                    bot22 = false;
+                    break;
+                case 23:
+                    bot23 = false;
+                    break;
+                default:
+                    System.out.println("La hora no esta definida");
+                    break;
+            }
+
+        }
+    }
+
+    private void calcula() {
+        Calendar calendario = new GregorianCalendar();
+        Date fechahoraactual = new Date();
+        calendario.setTime(fechahoraactual);
+        amp = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        if (amp.equals("PM")) {
+            int h = calendario.get(Calendar.HOUR_OF_DAY);
+            horas = h > 9 ? "" + h : "0" + h;
+        } else {
+            horas = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        }
+    }
+
+    public void returnFalsebtn() {
+        if (jButton00.getText().isEmpty()) {
+            bot0 = false;
+        }
+        if (jButton01.getText().isEmpty()) {
+            bot1 = false;
+        }
+        if (jButton02.getText().isEmpty()) {
+            bot2 = false;
+        }
+        if (jButton03.getText().isEmpty()) {
+            bot3 = false;
+        }
+        if (jButton04.getText().isEmpty()) {
+            bot4 = false;
+        }
+        if (jButton05.getText().isEmpty()) {
+            bot5 = false;
+        }
+        if (jButton06.getText().isEmpty()) {
+            bot6 = false;
+        }
+        if (jButton07.getText().isEmpty()) {
+            bot7 = false;
+        }
+        if (jButton08.getText().isEmpty()) {
+            bot8 = false;
+        }
+        if (jButton09.getText().isEmpty()) {
+            bot9 = false;
+        }
+        if (jButton10.getText().isEmpty()) {
+            bot10 = false;
+        }
+        if (jButton11.getText().isEmpty()) {
+            bot11 = false;
+        }
+        if (jButton12.getText().isEmpty()) {
+            bot12 = false;
+        }
+        if (jButton13.getText().isEmpty()) {
+            bot13 = false;
+        }
+        if (jButton14.getText().isEmpty()) {
+            bot14 = false;
+        }
+        if (jButton15.getText().isEmpty()) {
+            bot15 = false;
+        }
+        if (jButton16.getText().isEmpty()) {
+            bot16 = false;
+        }
+        if (jButton17.getText().isEmpty()) {
+            bot17 = false;
+        }
+        if (jButton18.getText().isEmpty()) {
+            bot18 = false;
+        }
+        if (jButton19.getText().isEmpty()) {
+            bot19 = false;
+        }
+        if (jButton20.getText().isEmpty()) {
+            bot20 = false;
+        }
+        if (jButton21.getText().isEmpty()) {
+            bot21 = false;
+        }
+        if (jButton22.getText().isEmpty()) {
+            bot22 = false;
+        }
+        if (jButton23.getText().isEmpty()) {
+            bot23 = false;
+        }
+    }
+
+    public boolean notificar(String hora) {
+        String formato = "dd/MM/YYY";
+        Date fechaActual = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat(formato);
+        Registro reg = new Registro();
+        int horaactual = Integer.parseInt(hora);
+        if (reg.buscarEvt(formatofecha.format(fechaActual), horaactual)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -191,22 +191,24 @@ public class ventanaLogin extends javax.swing.JFrame {
     private void BotonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLoginActionPerformed
         String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
         if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
-            String email = cajaEmail.getText();
-            String pass = cajaPass.getText();
-            Usuario NewUser = new Usuario();
-            Registro reg = new Registro();
-            NewUser.setCorreo(email);
-            NewUser.setContraseña(pass);
-            int result = reg.verificarUsuarioL(NewUser);
-            if (result == 1) {
-                reg.Loguearse(NewUser, result);
-                ventanaCalendario calendario = new ventanaCalendario();
-                calendario.setVisible(true);
-                this.dispose();
-            } else if (result == 2) {
-                reg.Loguearse(NewUser, result);
-            } else {
-                reg.Loguearse(NewUser, result);
+            if (cajaEmail.getText().contains("@") && cajaEmail.getText().contains(".")) {
+                String email = cajaEmail.getText();
+                String pass = cajaPass.getText();
+                Usuario NewUser = new Usuario();
+                Registro reg = new Registro();
+                NewUser.setCorreo(email);
+                NewUser.setContraseña(pass);
+                int result = reg.verificarUsuarioL(NewUser);
+                if (result == 1) {
+                    reg.Loguearse(NewUser, result);
+                    ventanaCalendario calendario = new ventanaCalendario();
+                    calendario.setVisible(true);
+                    this.dispose();
+                } else if (result == 2) {
+                    reg.Loguearse(NewUser, result);
+                } else {
+                    reg.Loguearse(NewUser, result);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, vacios);
