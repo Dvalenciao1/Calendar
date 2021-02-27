@@ -1,12 +1,11 @@
 package ventanas;
-
+import clases.Encriptacion;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import ventanas.POO.Registro;
-import ventanas.POO.Usuario;
+import clases.Registro;
+import clases.Usuario;
 
 public class ventanaLogin extends javax.swing.JFrame {
 
@@ -14,6 +13,7 @@ public class ventanaLogin extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         cajaEmail.requestFocus();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagenes/llave.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -191,13 +191,14 @@ public class ventanaLogin extends javax.swing.JFrame {
     private void BotonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLoginActionPerformed
         String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
         if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
+            String email = cajaEmail.getText();
+            String pass = new String(cajaPass.getPassword());
             if (cajaEmail.getText().contains("@") && cajaEmail.getText().contains(".")) {
-                String email = cajaEmail.getText();
-                String pass = cajaPass.getText();
+                String nuevopass = Encriptacion.code(pass);
                 Usuario NewUser = new Usuario();
                 Registro reg = new Registro();
                 NewUser.setCorreo(email);
-                NewUser.setContraseña(pass);
+                NewUser.setContraseña(nuevopass);
                 int result = reg.verificarUsuarioL(NewUser);
                 if (result == 1) {
                     reg.Loguearse(NewUser, result);
@@ -266,11 +267,12 @@ public class ventanaLogin extends javax.swing.JFrame {
             String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
             if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
                 String email = cajaEmail.getText();
-                String pass = cajaPass.getText();
+                String pass = new String(cajaPass.getPassword());
+                String nuevopass = Encriptacion.code(pass);
                 Usuario NewUser = new Usuario();
                 Registro reg = new Registro();
                 NewUser.setCorreo(email);
-                NewUser.setContraseña(pass);
+                NewUser.setContraseña(nuevopass);
                 int result = reg.verificarUsuarioL(NewUser);
                 if (result == 1) {
                     reg.Loguearse(NewUser, result);
@@ -288,7 +290,6 @@ public class ventanaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cajaPassKeyReleased
 
-    private int xx, yy;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BannerLogin;

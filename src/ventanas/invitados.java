@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-import ventanas.POO.Registro;
+import clases.Registro;
 
 /**
  *
@@ -27,6 +27,7 @@ public class invitados extends javax.swing.JFrame {
     public invitados() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagenes/invitar.png")).getImage());
         reg.tableUpdate(lista);
         addCheck(2, lista);
         lista.setAutoscrolls(true);
@@ -139,7 +140,7 @@ public class invitados extends javax.swing.JFrame {
         });
         jPanel1.add(fondo);
         fondo.setBounds(0, 0, 600, 432);
-        javax.swing.ImageIcon fondoprin = new javax.swing.ImageIcon("src/imagenes/fondoinvitado.png");
+        javax.swing.ImageIcon fondoprin = new javax.swing.ImageIcon("src/imagenes/fondodeari1.png");
         fondo.setIcon(new javax.swing.ImageIcon(fondoprin.getImage().getScaledInstance(fondo.getWidth(),fondo.getHeight(),java.awt.Image.SCALE_SMOOTH)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -97,7 +97,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnaddActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon masimg = new javax.swing.ImageIcon(&quot;src/imagenes/invitados.png&quot;);&#xa;btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(btnadd.getWidth(),btnadd.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon masimg = new javax.swing.ImageIcon(&quot;src/imagenes/opciones.png&quot;);&#xa;btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(btnadd.getWidth(),btnadd.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -262,7 +262,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="ventanas/Bundle.properties" key="ventanaCalendario.lbADD.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -1470,7 +1470,7 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fondopanelderMousePressed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon panelder = new javax.swing.ImageIcon(&quot;src/imagenes/fondo3.png&quot;);&#xa;fondopanelder.setIcon(new javax.swing.ImageIcon(panelder.getImage().getScaledInstance(fondopanelder.getWidth(), fondopanelder.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon panelder = new javax.swing.ImageIcon(&quot;src/imagenes/fondodeari3.png&quot;);&#xa;fondopanelder.setIcon(new javax.swing.ImageIcon(panelder.getImage().getScaledInstance(fondopanelder.getWidth(), fondopanelder.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1487,7 +1487,7 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fondopanelizqMousePressed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon panelimg = new javax.swing.ImageIcon(&quot;src/imagenes/fondo4.png&quot;);&#xa;fondopanelizq.setIcon(new javax.swing.ImageIcon(panelimg.getImage().getScaledInstance(fondopanelizq.getWidth(),fondopanelizq.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon panelimg = new javax.swing.ImageIcon(&quot;src/imagenes/fondodeari2.png&quot;);&#xa;fondopanelizq.setIcon(new javax.swing.ImageIcon(panelimg.getImage().getScaledInstance(fondopanelizq.getWidth(),fondopanelizq.getHeight(), java.awt.Image.SCALE_SMOOTH)));"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

@@ -145,7 +145,7 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fondoMousePressed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon fondoprin = new javax.swing.ImageIcon(&quot;src/imagenes/fondoinvitado.png&quot;);&#xa;fondo.setIcon(new javax.swing.ImageIcon(fondoprin.getImage().getScaledInstance(fondo.getWidth(),fondo.getHeight(),java.awt.Image.SCALE_SMOOTH)));"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="javax.swing.ImageIcon fondoprin = new javax.swing.ImageIcon(&quot;src/imagenes/fondodeari1.png&quot;);&#xa;fondo.setIcon(new javax.swing.ImageIcon(fondoprin.getImage().getScaledInstance(fondo.getWidth(),fondo.getHeight(),java.awt.Image.SCALE_SMOOTH)));"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

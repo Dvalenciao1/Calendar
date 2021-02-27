@@ -1,11 +1,12 @@
 package ventanas;
 
+import clases.Encriptacion;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import ventanas.POO.Registro;
-import ventanas.POO.Usuario;
+import clases.Registro;
+import clases.Usuario;
 
 public class ventanaRegister extends javax.swing.JFrame {
 
@@ -13,6 +14,7 @@ public class ventanaRegister extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         cajaUser.requestFocus();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagenes/llave.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -217,12 +219,13 @@ public class ventanaRegister extends javax.swing.JFrame {
             if (cajaEmail.getText().contains("@") && cajaEmail.getText().contains(".")) {
                 String User = cajaUser.getText();
                 String Email = cajaEmail.getText();
-                String Pass = cajaPass.getText();
+                String Pass = new String(cajaPass.getPassword());
                 Registro EnterReg = new Registro();
                 Usuario NewUser = new Usuario();
+                String nuevopass = Encriptacion.code(Pass);
                 NewUser.setUsuario(User);
                 NewUser.setCorreo(Email);
-                NewUser.setContraseña(Pass);
+                NewUser.setContraseña(nuevopass);
                 int result = EnterReg.verificarUsuarioR(NewUser);
                 if (result == -1) {
                     cajaEmail.setText("");
@@ -309,41 +312,50 @@ public class ventanaRegister extends javax.swing.JFrame {
 
     private void cajaPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaPassKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String exito = Usuario.idioma("ventanas/Bundle", "ventanaRegister.exito");
+            String pregunta = Usuario.idioma("ventanas/Bundle", "ventanaRegister.pregunta");
+            String botonconfirm = Usuario.idioma("ventanas/Bundle", "ventanaRegister.btnconfirm");
+            String existeUsuario = Usuario.idioma("ventanas/Bundle", "ventanaRegister.existeusuario");
+            String existeCorreo = Usuario.idioma("ventanas/Bundle", "ventanaRegister.existecorreo");
+            String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
             if (!cajaUser.getText().isEmpty() && !cajaEmail.getText().isEmpty() && !cajaPass.getText().isEmpty()) {
-                String User = cajaUser.getText();
-                String Email = cajaEmail.getText();
-                String Pass = cajaPass.getText();
-                Registro EnterReg = new Registro();
-                Usuario NewUser = new Usuario();
-                NewUser.setUsuario(User);
-                NewUser.setCorreo(Email);
-                NewUser.setContraseña(Pass);
-                int result = EnterReg.verificarUsuarioR(NewUser);
-                if (result == -1) {
-                    cajaEmail.setText("");
-                    cajaPass.setText("");
-                    cajaUser.setText("");
-                    EnterReg.registrar(NewUser);
-                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
-                    int response = JOptionPane.showConfirmDialog(this, "Desea continuar registrando?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (response != JOptionPane.YES_OPTION) {
-                        ventanaLogin log = new ventanaLogin();
-                        log.setVisible(true);
-                        this.dispose();
+                if (cajaEmail.getText().contains("@") && cajaEmail.getText().contains(".")) {
+                    String User = cajaUser.getText();
+                    String Email = cajaEmail.getText();
+                    String Pass = new String(cajaPass.getPassword());
+                    Registro EnterReg = new Registro();
+                    Usuario NewUser = new Usuario();
+                    String nuevopass = Encriptacion.code(Pass);
+                    NewUser.setUsuario(User);
+                    NewUser.setCorreo(Email);
+                    NewUser.setContraseña(nuevopass);
+                    int result = EnterReg.verificarUsuarioR(NewUser);
+                    if (result == -1) {
+                        cajaEmail.setText("");
+                        cajaPass.setText("");
+                        cajaUser.setText("");
+                        EnterReg.registrar(NewUser);
+                        JOptionPane.showMessageDialog(this, exito);
+                        int response = JOptionPane.showConfirmDialog(this, pregunta, botonconfirm, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if (response != JOptionPane.YES_OPTION) {
+                            ventanaLogin log = new ventanaLogin();
+                            log.setVisible(true);
+                            this.dispose();
+                        }
+                    } else if (result == 1) {
+                        cajaEmail.setText("");
+                        cajaPass.setText("");
+                        cajaUser.setText("");
+                        JOptionPane.showMessageDialog(null, existeUsuario);
+                    } else if (result == 2) {
+                        cajaEmail.setText("");
+                        cajaPass.setText("");
+                        cajaUser.setText("");
+                        JOptionPane.showMessageDialog(null, existeCorreo);
                     }
-                } else if (result == 1) {
-                    cajaEmail.setText("");
-                    cajaPass.setText("");
-                    cajaUser.setText("");
-                    JOptionPane.showMessageDialog(null, "El usuario ya existe");
-                } else if (result == 2) {
-                    cajaEmail.setText("");
-                    cajaPass.setText("");
-                    cajaUser.setText("");
-                    JOptionPane.showMessageDialog(null, "El correo ya existe");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Los campos estan vacios");
+                JOptionPane.showMessageDialog(this, vacios);
             }
         }
     }//GEN-LAST:event_cajaPassKeyReleased

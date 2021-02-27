@@ -8,8 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-import ventanas.POO.Registro;
-import ventanas.POO.Usuario;
+import clases.Registro;
+import clases.Usuario;
 
 public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
@@ -22,6 +22,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
     public ventanaCalendario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagenes/calendario.png")).getImage());
         h1 = new Thread(this);
         h1.start();
         agregarTooltip();
@@ -169,7 +170,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         });
         Panelizq.add(btnadd);
         btnadd.setBounds(1210, 460, 40, 40);
-        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/invitados.png");
+        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/opciones.png");
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(btnadd.getWidth(),btnadd.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 
         ScrollatInvitado.setPreferredSize(new java.awt.Dimension(280, 110));
@@ -242,7 +243,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         lbActividad.setBounds(980, 80, 130, 32);
 
         lbADD.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbADD.setForeground(new java.awt.Color(0, 0, 0));
+        lbADD.setForeground(new java.awt.Color(255, 255, 255));
         lbADD.setText(bundle.getString("ventanaCalendario.lbADD.text")); // NOI18N
         Panelizq.add(lbADD);
         lbADD.setBounds(1260, 470, 120, 19);
@@ -688,7 +689,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         });
         Panelizq.add(fondopanelder);
         fondopanelder.setBounds(950, 0, 450, 700);
-        javax.swing.ImageIcon panelder = new javax.swing.ImageIcon("src/imagenes/fondo3.png");
+        javax.swing.ImageIcon panelder = new javax.swing.ImageIcon("src/imagenes/fondodeari3.png");
         fondopanelder.setIcon(new javax.swing.ImageIcon(panelder.getImage().getScaledInstance(fondopanelder.getWidth(), fondopanelder.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 
         fondopanelizq.setOpaque(true);
@@ -704,7 +705,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         });
         Panelizq.add(fondopanelizq);
         fondopanelizq.setBounds(0, 0, 950, 700);
-        javax.swing.ImageIcon panelimg = new javax.swing.ImageIcon("src/imagenes/fondo4.png");
+        javax.swing.ImageIcon panelimg = new javax.swing.ImageIcon("src/imagenes/fondodeari2.png");
         fondopanelizq.setIcon(new javax.swing.ImageIcon(panelimg.getImage().getScaledInstance(fondopanelizq.getWidth(),fondopanelizq.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -775,13 +776,13 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_fondopanelizqMouseDragged
 
     private void btnaddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddMouseEntered
-        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/invitados.png");
+        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/opciones.png");
         btnadd.setBounds(1210, 460, 41, 41);
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(41, 41, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnaddMouseEntered
 
     private void btnaddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddMouseExited
-        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/invitados.png");
+        javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/opciones.png");
         btnadd.setBounds(1210, 460, 40, 40);
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnaddMouseExited
@@ -846,6 +847,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
                         invited.add(cadena[i].replace("\n", "").replace(" ", ""));
                     }
                 }
+                Usuario.enviarCorreo(reg.busquedadeCorreo(invited));
                 user.setListaIdinvitados(reg.busquedaIdxUsuario(invited));
                 if (!user.getListaIdinvitados().isEmpty()) {
                     reg.registrarActividad(user);
@@ -1688,5 +1690,11 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         } else {
             return false;
         }
+    }
+    
+    public void holamundo() {
+        System.out.println("Hola"
+                + "mundo"
+                + "by daniel");
     }
 }
