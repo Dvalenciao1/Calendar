@@ -264,6 +264,7 @@ public class ventanaLogin extends javax.swing.JFrame {
 
     private void cajaPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaPassKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cajaEmail.requestFocus();
             String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
             if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
                 String email = cajaEmail.getText();

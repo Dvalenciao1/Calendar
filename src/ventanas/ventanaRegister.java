@@ -312,6 +312,7 @@ public class ventanaRegister extends javax.swing.JFrame {
 
     private void cajaPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaPassKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cajaEmail.requestFocus();
             String exito = Usuario.idioma("ventanas/Bundle", "ventanaRegister.exito");
             String pregunta = Usuario.idioma("ventanas/Bundle", "ventanaRegister.pregunta");
             String botonconfirm = Usuario.idioma("ventanas/Bundle", "ventanaRegister.btnconfirm");
