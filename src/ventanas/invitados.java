@@ -9,9 +9,8 @@ import javax.swing.table.TableColumn;
 import clases.Registro;
 
 public class invitados extends javax.swing.JFrame {
-
-    private Registro reg = new Registro();
-
+    
+    //Personaliza el jtable para poder ingresar los datos correctamente
     public invitados() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -140,6 +139,7 @@ public class invitados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Cierra solo la ventana sin detener el programa y desmarca los checkbox
     private void btncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarActionPerformed
         this.dispose();
         for (int i = 0; i < lista.getRowCount(); i++) {
@@ -148,6 +148,7 @@ public class invitados extends javax.swing.JFrame {
         lista.clearSelection();
     }//GEN-LAST:event_btncerrarActionPerformed
 
+    //guarda en una lista los usuarios para agregarlos al textarea de la ventana de calendario
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<String> names = new ArrayList<>();
         for (int i = 0; i < lista.getRowCount(); i++) {
@@ -165,7 +166,7 @@ public class invitados extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    int xx, yy;
+    //permite mover la ventana manteniendo presionado
     private void fondoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoMousePressed
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             xx = evt.getX();
@@ -173,6 +174,7 @@ public class invitados extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_fondoMousePressed
 
+    //permite reubicar la ventana 
     private void fondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoMouseDragged
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             int x, y;
@@ -182,24 +184,28 @@ public class invitados extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_fondoMouseDragged
 
+    //Efecto hover entered
     private void btncerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncerrarMouseEntered
         ImageIcon closeimg = new ImageIcon("src/imagenes/cancelar.png");
         btncerrar.setBounds(540, 10, 53, 53);
         btncerrar.setIcon(new ImageIcon(closeimg.getImage().getScaledInstance(btncerrar.getWidth(), btncerrar.getHeight(), Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btncerrarMouseEntered
 
+    //Efecto hover exited
     private void btncerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncerrarMouseExited
         ImageIcon closeimg = new ImageIcon("src/imagenes/cancelar.png");
         btncerrar.setBounds(540, 10, 50, 50);
         btncerrar.setIcon(new ImageIcon(closeimg.getImage().getScaledInstance(btncerrar.getWidth(), btncerrar.getHeight(), Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btncerrarMouseExited
 
+    //Añade checkbox en el jtable
     public void addCheck(int column, JTable table) {
         TableColumn tc = table.getColumnModel().getColumn(column);
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));
         tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
     }
 
+    //valida si los checkbox estan seleccionados si ese es el caso devuelve como valor true
     public boolean isSelect(int row, int colum, JTable table) {
         if (table.getValueAt(row, colum) != null) {
             boolean s = Boolean.parseBoolean(table.getValueAt(row, colum).toString());
@@ -208,7 +214,8 @@ public class invitados extends javax.swing.JFrame {
             return false;
         }
     }
-
+    
+    //junto al metodo addcheckbox añaden al jtable un checkbox en cierta columna y cierta fila especificando la variable del jtable
     public String column(int row, int colum, JTable table) {
         String name = table.getValueAt(row, colum).toString();
         return name;
@@ -226,4 +233,6 @@ public class invitados extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable lista;
     // End of variables declaration//GEN-END:variables
+    private Registro reg = new Registro();
+    int xx, yy;
 }
