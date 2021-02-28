@@ -1,5 +1,7 @@
 package clases;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,10 +10,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class Registro extends SQL {
-    
+
     //Validar si los invitados ya tienen un evento ese dia y hora
+    //Busca en la base de datos los eventos de los usuarios para mostrarlo en pantalla al iniciar sesion
     public boolean buscarEvt(String fecha, int hora) {
         String title = Usuario.idioma("ventanas/Bundle", "claseregistro.title");
         String description = Usuario.idioma("ventanas/Bundle", "claseregistro.description");
@@ -26,6 +31,7 @@ public class Registro extends SQL {
                 String horaEvt = rs.getString(6);
                 String horas = String.valueOf(hora);
                 if (fecha.equals(fechaEvt) && horas.equals(horaEvt)) {
+                    Registro.sonido("src/musicNotify/notificacion.wav");
                     String nameEvt = rs.getString(2);
                     String descEvt = rs.getString(4);
                     String idevt = rs.getString(1);
@@ -44,6 +50,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Elimina los eventos de la base de datos
     public void EliminarEvt(String idEvt) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -56,6 +63,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Busca el id del evento en la base de datos para mostralo
     public String idEvento(String fecha, int hora) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -74,6 +82,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Cuenta las lineas encontradas de la base de datos
     public String countRow() {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -94,6 +103,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Cuenta las lineas encontradas en la base de datos de una diferente busqueda
     public String countRowReg(String cadena) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -114,7 +124,8 @@ public class Registro extends SQL {
         }
     }
 
-    public String[][] guardarAct(String cantidad) {
+    //busca la id del usuario en la tabla de actividad para buscar las actividades guardadas por el
+    public String[][] Busquedaid(String cantidad) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
         String sql1 = "select * from actividad where idusuario = " + Usuario.getIduser();
@@ -140,6 +151,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Busca al usuario por la id para presentar sus datos
     public String[][] busquedaUsuariosxId(String cadena, String cantidad) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -163,6 +175,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Busca la id del usuario para presentar sus datos en otra consulta
     public ArrayList busquedaIdxUsuario(ArrayList<String> list) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -187,7 +200,8 @@ public class Registro extends SQL {
         }
         return listaid;
     }
-    
+
+    //Busca el correo del usuario de los invitados para enviar el mensaje atraves de la id
     public ArrayList busquedadeCorreo(ArrayList<String> list) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -213,6 +227,7 @@ public class Registro extends SQL {
         return listaid;
     }
 
+    //Guarda la activida en la base de datos en la tabla actividad
     public boolean registrarActividad(Usuario usr) {
         PreparedStatement ps = null;
         SQL con = new SQL();
@@ -236,6 +251,7 @@ public class Registro extends SQL {
         }
     }
 
+    //Guarda o registra los datos del usuario
     public boolean registrar(Usuario usr) {
         PreparedStatement ps = null;
         SQL con = new SQL();
@@ -254,6 +270,7 @@ public class Registro extends SQL {
         }
     }
 
+    //verifica si el usuario no existe para registrarlo
     public int verificarUsuarioR(Usuario usr) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -278,6 +295,7 @@ public class Registro extends SQL {
         return -1;
     }
 
+    //verifica si el usuario existe para loguearlo
     public int verificarUsuarioL(Usuario usr) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -307,6 +325,7 @@ public class Registro extends SQL {
         return -1;
     }
 
+    //nos mustra si se loguea el usuario de forma correcta
     public int Loguearse(Usuario usr, int result) {
         String bienvenida = Usuario.idioma("ventanas/Bundle", "class.register.binvenida");
         String contrainco = Usuario.idioma("ventanas/Bundle", "class.register.contrainco");
@@ -321,6 +340,7 @@ public class Registro extends SQL {
         return 1;
     }
 
+    //LLena la tabla con los correos y usuarios para invitarlos
     public void tableUpdate(javax.swing.JTable table) {
         SQL con = new SQL();
         Connection conexion = con.getConexion();
@@ -346,6 +366,17 @@ public class Registro extends SQL {
                 }
             }
         } catch (Exception e) {
+        }
+    }
+
+    public static void sonido(String ruta) {
+        String sound = ruta;
+        try {
+            InputStream in = new FileInputStream(sound);
+            AudioStream audio = new AudioStream(in);
+            AudioPlayer.player.start(audio);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

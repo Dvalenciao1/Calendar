@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Usuario {
 
+    //Creacion de las variables
     private static String Correo;
     private String Contraseña;
     private static String nameAct;
@@ -93,11 +94,13 @@ public class Usuario {
         this.Contraseña = Contraseña;
     }
 
+    //Toma la ubicacion y la llave para cambiar el idioma de algun JOtionpane o setText que no aparezca en el archivo
     public static String idioma(String url, String key) {
         ResourceBundle res = ResourceBundle.getBundle(url);
         return res.getString(key);
     }
 
+    //Envia un correo a todos los usuario invitados desde el correo de la aplicacion
     public static boolean enviarCorreo(ArrayList<String> invitado) {
         String title = idioma("ventanas/Bundle", "claseusuario.titulo.msg");
         String remitente = idioma("ventanas/Bundle", "claseusuario.remitente.msg");

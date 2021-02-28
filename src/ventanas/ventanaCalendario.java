@@ -13,12 +13,8 @@ import clases.Usuario;
 
 public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
-    private String horas, amp;
-    private int Horabtn;
-    private Thread h1;
-    private int xx, xy;
-    private int xx1, xy1;
-
+    
+    //Se ejecuta el programa, carga laa actividades y las notificaciones
     public ventanaCalendario() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -31,12 +27,14 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
     }
 
+    //Desactiva el panel derecho para que no se pueda usar
     public void Disable() {
         txtAct.setEditable(false);
         txtDesc.setEditable(false);
         btnadd.setEnabled(false);
     }
 
+    //Activa los componentes para ingresar los datos
     public void ActivarComp() {
         txtAct.setEditable(true);
         txtDesc.setEditable(true);
@@ -722,22 +720,26 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Cierra la aplicacion y termina la ejecucion del programa
     private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_botonCerrarActionPerformed
 
+    //Retrocede a la ventana login para que cambie de usuario
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         ventanaLogin lgon = new ventanaLogin();
         lgon.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnbackActionPerformed
 
+    //Efecto hover
     private void btnbackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbackMouseEntered
         btnback.setBounds(10, 10, 53, 53);
         javax.swing.ImageIcon backimg = new javax.swing.ImageIcon("src/imagenes/cerrar-sesion.png");
         btnback.setIcon(new javax.swing.ImageIcon(backimg.getImage().getScaledInstance(53, 53, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnbackMouseEntered
 
+    //Efecto hover
     private void btnbackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbackMouseExited
         btnback.setBounds(10, 10, 50, 50);
         javax.swing.ImageIcon backimg = new javax.swing.ImageIcon("src/imagenes/cerrar-sesion.png");
@@ -745,6 +747,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_btnbackMouseExited
 
+    //Efecto hover
     private void botonCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseEntered
         botonCerrar.setBounds(1340, 10, 53, 53);
         javax.swing.ImageIcon imgequis = new javax.swing.ImageIcon("src/imagenes/cancelar.png");
@@ -752,6 +755,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_botonCerrarMouseEntered
 
+    //Efecto hover
     private void botonCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseExited
         botonCerrar.setBounds(1340, 10, 50, 50);
         javax.swing.ImageIcon imgequis = new javax.swing.ImageIcon("src/imagenes/cancelar.png");
@@ -759,6 +763,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_botonCerrarMouseExited
 
+    //permite mover la ventana
     private void fondopanelizqMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelizqMousePressed
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             Disable();
@@ -767,6 +772,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_fondopanelizqMousePressed
 
+    //nos reubicar la ventana
     private void fondopanelizqMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelizqMouseDragged
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             int x = evt.getXOnScreen();
@@ -775,18 +781,21 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_fondopanelizqMouseDragged
 
+    //Efecto hover
     private void btnaddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddMouseEntered
         javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/opciones.png");
         btnadd.setBounds(1210, 460, 41, 41);
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(41, 41, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnaddMouseEntered
 
+    //Efecto hover
     private void btnaddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddMouseExited
         javax.swing.ImageIcon masimg = new javax.swing.ImageIcon("src/imagenes/opciones.png");
         btnadd.setBounds(1210, 460, 40, 40);
         btnadd.setIcon(new javax.swing.ImageIcon(masimg.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnaddMouseExited
 
+    //Abre la ventana de eleccion de invitados y valida si ya existe una ventana abierta
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         boolean resultpg = invpg.isShowing();
         if (resultpg == true) {
@@ -799,6 +808,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_btnaddActionPerformed
 
+    //permiete mover la ventana
     private void fondopanelderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelderMousePressed
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             xx1 = evt.getX() + 950;
@@ -806,6 +816,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_fondopanelderMousePressed
 
+    //permite reubicar la ventana
     private void fondopanelderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondopanelderMouseDragged
         if (evt.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
             int x = evt.getXOnScreen();
@@ -822,10 +833,12 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         return formatofecha.format(fecha);
     }
 
+    //Recoge la hora de los botones
     public void setHora(int Hora) {
         this.Horabtn = Hora;
     }
 
+    //Recoge los datos y hace validaciones para ingresarlos en la base de datos
     private void botonActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActividadActionPerformed
         String text = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.btnAct");
         String tiltext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.JOptionpane.btnActTilt");
@@ -864,6 +877,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_botonActividadActionPerformed
 
+    //Botones de hora nos permie habilitar el panel derecho y bloquearlos para validar si quiere eliminar la actividad
     private void jButton00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton00ActionPerformed
         setHora(0);
         if (bot0 == false) {
@@ -1094,6 +1108,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_jButton22ActionPerformed
 
+    //Botones de hora nos permie habilitar el panel derecho y bloquearlos para validar si quiere eliminar la actividad
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         setHora(23);
         if (bot23 == false) {
@@ -1104,18 +1119,21 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_jButton23ActionPerformed
 
+    //Permite seleccionar la fecha de datechoose y nos recarga la ventana para mostranos las actividades
     private void select1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select1ActionPerformed
         restablecer();
         cambiarFecha();
         returnFalsebtn();
     }//GEN-LAST:event_select1ActionPerformed
 
+    //limpia el texto de los botones el 00 al 23
     public void limpiarActividad() {
         txtAct.setText("");
         txtDesc.setText("");
         atInvitado.setText("");
     }
 
+    //Bloque los botone para que no se ingresen 2 actividades en la misma hora
     public void bloquearBoton(String titulo, int hor, Color color) {
         if (hor == 0) {
             jButton00.setText(titulo);
@@ -1239,7 +1257,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
             bot23 = true;
         }
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panelizq;
     private javax.swing.JScrollPane ScrollatInvitado;
@@ -1314,12 +1332,19 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
     // End of variables declaration//GEN-END:variables
     private invitados invpg = new invitados();
     private Boolean bot0 = false, bot1 = false, bot2 = false, bot3 = false, bot4 = false, bot5 = false, bot6 = false, bot7 = false, bot8 = false, bot9 = false, bot10 = false, bot11 = false, bot12 = false, bot13 = false, bot14 = false, bot15 = false, bot16 = false, bot17 = false, bot18 = false, bot19 = false, bot20 = false, bot21 = false, bot22 = false, bot23 = false;
-
+    private String horas, amp;
+    private int Horabtn;
+    private Thread h1;
+    private int xx, xy;
+    private int xx1, xy1;
+    //Final de las nuevas variables
+    
+    //Permite ejecutar un reloj para validar cuando las actividades coincidan con la fecha establecida
     @Override
     public void run() {
         Thread ct = Thread.currentThread();
         while (ct == h1) {
-            calcula();
+            relojActual();
             if (notificar(horas) == true) {
                 restablecer();
                 cambiarFecha();
@@ -1332,6 +1357,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    //Agrega texto de informacion de los botones del 00 al 23
     public void agregarTooltip() {
         String add = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.tooltiptxt.Añadir");
         jButton00.setToolTipText(add);
@@ -1359,6 +1385,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         jButton23.setToolTipText(add);
     }
 
+    //Carga las actividades recogida en las bases de datos por la id del usuario y nos muestra en los botones
     public void cargarActividades() {
         String formato = "dd/MM/YYY";
         Date fechaActual = new Date();
@@ -1368,7 +1395,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         Registro reg = new Registro();
         String cantidadActividades = reg.countRow();//Cantidad de Actividades en la base de datos
         String cantidadusr;//Cantidad de usuarios
-        String[][] nuevalista = reg.guardarAct(cantidadActividades);
+        String[][] nuevalista = reg.Busquedaid(cantidadActividades);
         for (int i = 0; i < nuevalista.length; i++) {
             cantidadusr = reg.countRowReg(nuevalista[i][2]);
             String[][] nuevalistacorreo = reg.busquedaUsuariosxId(nuevalista[i][2], cantidadusr);
@@ -1395,11 +1422,12 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    //Nos permite validar cuando cambie de fecha para mostrar las actividades de ese dia
     public void cambiarFecha() {
         Registro reg = new Registro();
         String cantidadActividades = reg.countRow();//Cantidad de Actividades en la base de datos
         String cantidadusr;//Cantidad de usuarios
-        String[][] nuevalista = reg.guardarAct(cantidadActividades);
+        String[][] nuevalista = reg.Busquedaid(cantidadActividades);
         String invittext = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.jbuton.txt");
         for (int i = 0; i < nuevalista.length; i++) {
             cantidadusr = reg.countRowReg(nuevalista[i][2]);
@@ -1426,6 +1454,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    //Elimina el texto para poder ingresar nuevas actividades en otros dias
     public void restablecer() {
         jButton00.setEnabled(true);
         jButton00.setText("");
@@ -1501,6 +1530,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         jButton23.setEnabled(true);
     }
 
+    //Elimina la actividad de la base de datos y junto al metodo restablecer tambien lo elimnar de la ventana
     public void suprimirActividad() {
         String txtdelete = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.txtDelete.JoptionPane");
         String txtconfirm = Usuario.idioma("ventanas/Bundle", "ventanaCalendario.txtconfirm.JoptionPane");
@@ -1591,7 +1621,8 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    private void calcula() {
+    //Es un metodo que se actualiza cada segundo para validar que la hora coincida con el evento
+    private void relojActual() {
         Calendar calendario = new GregorianCalendar();
         Date fechahoraactual = new Date();
         calendario.setTime(fechahoraactual);
@@ -1604,6 +1635,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    //Valida si los botones de 00 al 23 y convierte la variable del boton a false
     public void returnFalsebtn() {
         if (jButton00.getText().isEmpty()) {
             bot0 = false;
@@ -1679,6 +1711,7 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    //Envia una notificacion en la pantalla cuando el evento llegue a la hora indicada
     public boolean notificar(String hora) {
         String formato = "dd/MM/YYY";
         Date fechaActual = new Date();
@@ -1690,11 +1723,5 @@ public class ventanaCalendario extends javax.swing.JFrame implements Runnable {
         } else {
             return false;
         }
-    }
-    
-    public void holamundo() {
-        System.out.println("Hola"
-                + "mundo"
-                + "by daniel");
     }
 }
