@@ -1,6 +1,7 @@
 package clases;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -14,8 +15,7 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 public class Registro extends SQL {
-
-    //Validar si los invitados ya tienen un evento ese dia y hora
+    
     //Busca en la base de datos los eventos de los usuarios para mostrarlo en pantalla al iniciar sesion
     public boolean buscarEvt(String fecha, int hora) {
         String title = Usuario.idioma("ventanas/Bundle", "claseregistro.title");
@@ -59,7 +59,7 @@ public class Registro extends SQL {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(idEvt));
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (NumberFormatException | SQLException e) {
         }
     }
 
@@ -91,11 +91,11 @@ public class Registro extends SQL {
         String cantidad = "";
         try {
             st = conexion.createStatement();
-            ResultSet rs = st.executeQuery(sql1);
-            while (rs.next()) {
-                cantidad = rs.getString(1);
+            try (ResultSet rs = st.executeQuery(sql1)) {
+                while (rs.next()) {
+                    cantidad = rs.getString(1);
+                }
             }
-            rs.close();
             return cantidad;
         } catch (SQLException e) {
             System.out.println(e);
@@ -112,11 +112,11 @@ public class Registro extends SQL {
         String cantidad = "";
         try {
             PreparedStatement pst = conexion.prepareStatement("SELECT count(*) FROM registro where idregistro =" + cadenafinal.replace("[", "").replace("]", ""));
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                cantidad = rs.getString(1);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    cantidad = rs.getString(1);
+                }
             }
-            rs.close();
             return cantidad;
         } catch (SQLException e) {
             System.out.println(e);
@@ -133,17 +133,17 @@ public class Registro extends SQL {
         String[][] listaAct = new String[Integer.parseInt(cantidad)][5];
         try {
             st = conexion.createStatement();
-            ResultSet rs = st.executeQuery(sql1);
-            int i = 0;
-            while (rs.next() && i < listaAct.length) {
-                listaAct[i][0] = rs.getString(2);
-                listaAct[i][1] = rs.getString(4);
-                listaAct[i][2] = rs.getString(7);
-                listaAct[i][3] = rs.getString(5);
-                listaAct[i][4] = rs.getString(6);
-                i++;
+            try (ResultSet rs = st.executeQuery(sql1)) {
+                int i = 0;
+                while (rs.next() && i < listaAct.length) {
+                    listaAct[i][0] = rs.getString(2);
+                    listaAct[i][1] = rs.getString(4);
+                    listaAct[i][2] = rs.getString(7);
+                    listaAct[i][3] = rs.getString(5);
+                    listaAct[i][4] = rs.getString(6);
+                    i++;
+                }
             }
-            rs.close();
             return listaAct;
         } catch (SQLException e) {
             System.out.println(e);
@@ -189,7 +189,6 @@ public class Registro extends SQL {
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).equals(user)) {
                         listaid.add(userid);
-                        continue;
                     }
                 }
             }
@@ -215,7 +214,6 @@ public class Registro extends SQL {
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).equals(user)) {
                         listaid.add(useremail);
-                        continue;
                     }
                 }
             }
@@ -229,7 +227,7 @@ public class Registro extends SQL {
 
     //Guarda la activida en la base de datos en la tabla actividad
     public boolean registrarActividad(Usuario usr) {
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         SQL con = new SQL();
         Connection conexion = con.getConexion();
         String ids = usr.getListaIdinvitados().toString();
@@ -253,13 +251,13 @@ public class Registro extends SQL {
 
     //Guarda o registra los datos del usuario
     public boolean registrar(Usuario usr) {
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         SQL con = new SQL();
         Connection conexion = con.getConexion();
         String sql = "INSERT INTO registro(User, Email, Pass)values(?,?,?)";
         try {
             ps = conexion.prepareStatement(sql);
-            ps.setString(1, usr.getUsuario());
+            ps.setString(1, Usuario.getUsuario());
             ps.setString(2, usr.getCorreo());
             ps.setString(3, usr.getContraseña());
             ps.execute();
@@ -280,7 +278,7 @@ public class Registro extends SQL {
             while (rs.next()) {
                 String user = rs.getString(2);
                 String correo = rs.getString(3);
-                if (usr.getUsuario().equals(user)) {
+                if (Usuario.getUsuario().equals(user)) {
                     conexion.close();
                     return 1;
                 } else if (usr.getCorreo().equals(correo)) {
@@ -330,12 +328,16 @@ public class Registro extends SQL {
         String bienvenida = Usuario.idioma("ventanas/Bundle", "class.register.binvenida");
         String contrainco = Usuario.idioma("ventanas/Bundle", "class.register.contrainco");
         String noexiste = Usuario.idioma("ventanas/Bundle", "class.register.noexist");
-        if (result == 1) {
-            JOptionPane.showMessageDialog(null, bienvenida + " " + usr.getUsuario());
-        } else if (result == 2) {
-            JOptionPane.showMessageDialog(null, contrainco);
-        } else {
-            JOptionPane.showMessageDialog(null, noexiste);
+        switch (result) {
+            case 1:
+                JOptionPane.showMessageDialog(null, bienvenida + " " + Usuario.getUsuario());
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, contrainco);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, noexiste);
+                break;
         }
         return 1;
     }
@@ -365,7 +367,7 @@ public class Registro extends SQL {
                     model.addRow(dato);
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 
@@ -375,7 +377,7 @@ public class Registro extends SQL {
             InputStream in = new FileInputStream(sound);
             AudioStream audio = new AudioStream(in);
             AudioPlayer.player.start(audio);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }

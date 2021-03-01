@@ -1,4 +1,5 @@
 package ventanas;
+
 import clases.Encriptacion;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -90,6 +91,7 @@ public class ventanaLogin extends javax.swing.JFrame {
         PanelPrincipal.add(BotonLogin);
         BotonLogin.setBounds(220, 530, 250, 50);
 
+        botonCerrar.setIcon(new ImageIcon(equisimg.getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH)));
         botonCerrar.setBorderPainted(false);
         botonCerrar.setContentAreaFilled(false);
         botonCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -109,8 +111,6 @@ public class ventanaLogin extends javax.swing.JFrame {
         });
         PanelPrincipal.add(botonCerrar);
         botonCerrar.setBounds(640, 10, 50, 50);
-        ImageIcon equisimg = new ImageIcon("src/imagenes/cancelar.png");
-        botonCerrar.setIcon(new ImageIcon(equisimg.getImage().getScaledInstance(botonCerrar.getWidth(),botonCerrar.getHeight(), Image.SCALE_SMOOTH)));
 
         BotonRegister.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         BotonRegister.setText(bundle.getString("ventanaLogin.BotonRegister.text")); // NOI18N
@@ -165,8 +165,9 @@ public class ventanaLogin extends javax.swing.JFrame {
         PanelTransparente.setBounds(100, 70, 500, 650);
 
         ImageIcon imgfondo = new ImageIcon("src/imagenes/Login.png");
+        FondoPanel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         FondoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Login.png"))); // NOI18N
-        FondoPanel.setDisabledIcon(null);
+        FondoPanel.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         FondoPanel.setMaximumSize(new java.awt.Dimension(0, 0));
         FondoPanel.setMinimumSize(new java.awt.Dimension(0, 0));
         FondoPanel.setOpaque(true);
@@ -200,15 +201,19 @@ public class ventanaLogin extends javax.swing.JFrame {
                 NewUser.setCorreo(email);
                 NewUser.setContraseña(nuevopass);
                 int result = reg.verificarUsuarioL(NewUser);
-                if (result == 1) {
-                    reg.Loguearse(NewUser, result);
-                    ventanaCalendario calendario = new ventanaCalendario();
-                    calendario.setVisible(true);
-                    this.dispose();
-                } else if (result == 2) {
-                    reg.Loguearse(NewUser, result);
-                } else {
-                    reg.Loguearse(NewUser, result);
+                switch (result) {
+                    case 1:
+                        reg.Loguearse(NewUser, result);
+                        ventanaCalendario calendario = new ventanaCalendario();
+                        calendario.setVisible(true);
+                        this.dispose();
+                        break;
+                    case 2:
+                        reg.Loguearse(NewUser, result);
+                        break;
+                    default:
+                        reg.Loguearse(NewUser, result);
+                        break;
                 }
             }
         } else {
@@ -266,24 +271,28 @@ public class ventanaLogin extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cajaEmail.requestFocus();
             String vacios = Usuario.idioma("ventanas/Bundle", "ventanalogin.vacios");
-            if (!cajaEmail.getText().isEmpty() || !cajaPass.getText().isEmpty()) {
-                String email = cajaEmail.getText();
-                String pass = new String(cajaPass.getPassword());
+            String pass = new String(cajaPass.getPassword());
+            String email = cajaEmail.getText();
+            if (!cajaEmail.getText().isEmpty()|| !pass.equals("")) {
                 String nuevopass = Encriptacion.code(pass);
                 Usuario NewUser = new Usuario();
                 Registro reg = new Registro();
                 NewUser.setCorreo(email);
                 NewUser.setContraseña(nuevopass);
                 int result = reg.verificarUsuarioL(NewUser);
-                if (result == 1) {
-                    reg.Loguearse(NewUser, result);
-                    ventanaCalendario calendario = new ventanaCalendario();
-                    calendario.setVisible(true);
-                    this.dispose();
-                } else if (result == 2) {
-                    reg.Loguearse(NewUser, result);
-                } else {
-                    reg.Loguearse(NewUser, result);
+                switch (result) {
+                    case 1:
+                        reg.Loguearse(NewUser, result);
+                        ventanaCalendario calendario = new ventanaCalendario();
+                        calendario.setVisible(true);
+                        this.dispose();
+                        break;
+                    case 2:
+                        reg.Loguearse(NewUser, result);
+                        break;
+                    default:
+                        reg.Loguearse(NewUser, result);
+                        break;
                 }
             } else {
                 JOptionPane.showMessageDialog(this, vacios);
@@ -307,4 +316,5 @@ public class ventanaLogin extends javax.swing.JFrame {
     private LIB.JTexfieldPH_Password cajaPass;
     // End of variables declaration//GEN-END:variables
 
+    ImageIcon equisimg = new ImageIcon(getClass().getResource("/imagenes/cancelar.png"));
 }
